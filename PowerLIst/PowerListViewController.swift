@@ -11,10 +11,14 @@ import UIKit
 class PowerListViewController: UITableViewController {
 
     var itemArray = ["Code", "Read", "Floss"]
+    let defaults = UserDefaults.standard
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        if let items = defaults.array(forKey: "PowerListArray") as? [String] {
+            itemArray = items
+        }
         
     }
 
@@ -56,7 +60,8 @@ class PowerListViewController: UITableViewController {
             //what will happen once the user clicks the add item button on our UIAlert
             if textField.text != "" {
                 self.itemArray.append(textField.text!)
-                print(self.itemArray)
+                self.defaults.set(self.itemArray, forKey: "PowerListArray")
+                
                 self.tableView.reloadData()
             } else {
                 print("User did not enter an item")
