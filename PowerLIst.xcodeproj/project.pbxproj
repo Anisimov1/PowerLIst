@@ -8,20 +8,20 @@
 
 /* Begin PBXBuildFile section */
 		4B12ADB2214B6950001175F7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B12ADB1214B6950001175F7 /* AppDelegate.swift */; };
-		4B12ADB4214B6950001175F7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B12ADB3214B6950001175F7 /* ViewController.swift */; };
-		4B12ADB7214B6950001175F7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4B12ADB5214B6950001175F7 /* Main.storyboard */; };
+		4B12ADB4214B6950001175F7 /* PowerListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B12ADB3214B6950001175F7 /* PowerListViewController.swift */; };
 		4B12ADB9214B6951001175F7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4B12ADB8214B6951001175F7 /* Assets.xcassets */; };
 		4B12ADBC214B6951001175F7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4B12ADBA214B6951001175F7 /* LaunchScreen.storyboard */; };
+		4B12ADC4214B7014001175F7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4B12ADC3214B7014001175F7 /* Main.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		4B12ADAE214B6950001175F7 /* PowerLIst.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PowerLIst.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B12ADB1214B6950001175F7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		4B12ADB3214B6950001175F7 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		4B12ADB6214B6950001175F7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		4B12ADB3214B6950001175F7 /* PowerListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PowerListViewController.swift; sourceTree = "<group>"; };
 		4B12ADB8214B6951001175F7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4B12ADBB214B6951001175F7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4B12ADBD214B6951001175F7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4B12ADC3214B7014001175F7 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,9 +55,9 @@
 			isa = PBXGroup;
 			children = (
 				4B12ADB1214B6950001175F7 /* AppDelegate.swift */,
-				4B12ADB3214B6950001175F7 /* ViewController.swift */,
-				4B12ADB5214B6950001175F7 /* Main.storyboard */,
+				4B12ADB3214B6950001175F7 /* PowerListViewController.swift */,
 				4B12ADB8214B6951001175F7 /* Assets.xcassets */,
+				4B12ADC3214B7014001175F7 /* Main.storyboard */,
 				4B12ADBA214B6951001175F7 /* LaunchScreen.storyboard */,
 				4B12ADBD214B6951001175F7 /* Info.plist */,
 			);
@@ -124,7 +124,7 @@
 			files = (
 				4B12ADBC214B6951001175F7 /* LaunchScreen.storyboard in Resources */,
 				4B12ADB9214B6951001175F7 /* Assets.xcassets in Resources */,
-				4B12ADB7214B6950001175F7 /* Main.storyboard in Resources */,
+				4B12ADC4214B7014001175F7 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -135,7 +135,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4B12ADB4214B6950001175F7 /* ViewController.swift in Sources */,
+				4B12ADB4214B6950001175F7 /* PowerListViewController.swift in Sources */,
 				4B12ADB2214B6950001175F7 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -143,14 +143,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		4B12ADB5214B6950001175F7 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				4B12ADB6214B6950001175F7 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		4B12ADBA214B6951001175F7 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
