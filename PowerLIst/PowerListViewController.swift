@@ -10,7 +10,7 @@ import UIKit
 
 class PowerListViewController: UITableViewController {
 
-    let itemArray = ["Code", "Read", "Floss"]
+    var itemArray = ["Code", "Read", "Floss"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,6 +44,34 @@ class PowerListViewController: UITableViewController {
         tableView.deselectRow(at: indexPath, animated: true)
         
     }
+    
+    //MARK - ADd New Items
+    
+    @IBAction func addButton(_ sender: UIBarButtonItem) {
+        
+        var textField = UITextField() //has scope to be accessible in all closures within this action of addBtn
+        
+        let alert = UIAlertController(title: "Add New Mission", message: "", preferredStyle: .alert)
+        let action = UIAlertAction(title: "Add Mission", style: .default) { (action) in
+            //what will happen once the user clicks the add item button on our UIAlert
+            if textField.text != "" {
+                self.itemArray.append(textField.text!)
+                print(self.itemArray)
+                self.tableView.reloadData()
+            } else {
+                print("User did not enter an item")
+            }
+        }
+        alert.addTextField { (alertTextField) in
+            alertTextField.placeholder = "Create new mission"
+            textField = alertTextField
+        }
+        alert.addAction(action)
+        present(alert, animated: true, completion: nil)
+    
+    }
+    
+    
 
 }
 
