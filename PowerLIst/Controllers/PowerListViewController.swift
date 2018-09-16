@@ -10,13 +10,14 @@ import UIKit
 
 class PowerListViewController: UITableViewController {
 
-    var itemArray = ["Code", "Read", "Floss"]
+    var itemArray = [PowerListCell]()
+    
     let defaults = UserDefaults.standard
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if let items = defaults.array(forKey: "PowerListArray") as? [String] {
+        if let items = defaults.array(forKey: "PowerListArray") as? [PowerListCell] {
             itemArray = items
         }
         
@@ -31,7 +32,23 @@ class PowerListViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PowerListCell", for: indexPath)
-        cell.textLabel?.text = itemArray[indexPath.row]
+        
+        let item = itemArray[indexPath.row]
+        cell.textLabel?.text = item.title
+        
+        // Ternary operator ==>
+        //value = condition ? valueIfTrue : valueIfFalse
+        // if true then set it as true, if not then no check mark
+        
+        // This is the same as below
+        cell.accessoryType = item.done ? .checkmark : .none
+        
+        //        if item.done == true {
+        //            cell.accessoryType = .checkmark
+        //        } else {
+        //            cell.accessoryType = .none
+        //        }
+
         return cell
     }
     
@@ -40,11 +57,9 @@ class PowerListViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //print(itemArray[indexPath.row])
         
-        if tableView.cellForRow(at: indexPath)?.accessoryType == .checkmark {
-        tableView.cellForRow(at: indexPath)?.accessoryType = .none
-        } else {
-        tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
-        }
+        itemArray[indexPath.row].done = !itemArray[indexPath.row].done
+        tableView.reloadData()
+        
         tableView.deselectRow(at: indexPath, animated: true)
         
     }
@@ -59,7 +74,10 @@ class PowerListViewController: UITableViewController {
         let action = UIAlertAction(title: "Add Mission", style: .default) { (action) in
             //what will happen once the user clicks the add item button on our UIAlert
             if textField.text != "" {
-                self.itemArray.append(textField.text!)
+                
+                let newItem = PowerListCell()
+                newItem.title = textField.text!
+                self.itemArray.append(newItem)
                 self.defaults.set(self.itemArray, forKey: "PowerListArray")
                 
                 self.tableView.reloadData()
