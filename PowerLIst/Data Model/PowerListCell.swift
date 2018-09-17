@@ -8,7 +8,7 @@
 
 import Foundation
 
-class PowerListCell {
+class PowerListCell: Codable {
     var title: String = ""
     var done: Bool = false
 }
