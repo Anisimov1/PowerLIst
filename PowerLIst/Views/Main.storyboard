@@ -10,6 +10,45 @@
     </dependencies>
     <scenes>
         <!--PowerList-->
+        <scene sceneID="qpS-gg-ZAH">
+            <objects>
+                <tableViewController id="6r1-Xf-6gj" customClass="CategoryViewController" customModule="PowerLIst" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="gsb-Kw-eJs">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="CategoryCell" id="aTK-di-MZ0">
+                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="aTK-di-MZ0" id="u64-Re-0A6">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="6r1-Xf-6gj" id="FTp-bT-fhp"/>
+                            <outlet property="delegate" destination="6r1-Xf-6gj" id="fXo-Ux-Exk"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="PowerList" id="9yd-WK-DbX">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="WlF-LZ-dc1">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="addButtonPressed:" destination="6r1-Xf-6gj" id="aON-LE-v57"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <segue destination="mqq-Nr-a6n" kind="show" identifier="goToList" id="lKO-GJ-YYm"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mDV-Zb-KQA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="716" y="116"/>
+        </scene>
+        <!--Items-->
         <scene sceneID="gIo-1C-wyO">
             <objects>
                 <tableViewController id="mqq-Nr-a6n" customClass="PowerListViewController" customModule="PowerLIst" customModuleProvider="target" sceneMemberID="viewController">
@@ -17,9 +56,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <searchBar key="tableHeaderView" contentMode="redraw" id="Ngu-53-uIW">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <textInputTraits key="textInputTraits"/>
+                            <connections>
+                                <outlet property="delegate" destination="mqq-Nr-a6n" id="gUb-cG-QoM"/>
+                            </connections>
+                        </searchBar>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="PowerListCell" id="Ud6-1W-qhI">
-                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="72" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Ud6-1W-qhI" id="JGb-CU-hQz">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
@@ -33,7 +80,7 @@
                             <outlet property="delegate" destination="mqq-Nr-a6n" id="Dfm-zm-SuQ"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="PowerList" id="sow-hu-ga7">
+                    <navigationItem key="navigationItem" title="Items" id="sow-hu-ga7">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="XlJ-0y-s5y">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
@@ -44,7 +91,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1tB-a4-tgk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="817" y="127"/>
+            <point key="canvasLocation" x="1471" y="116"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="c3M-kH-i8U">
@@ -58,7 +105,7 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="mqq-Nr-a6n" kind="relationship" relationship="rootViewController" id="lH2-YB-Ntd"/>
+                        <segue destination="6r1-Xf-6gj" kind="relationship" relationship="rootViewController" id="dMk-D3-TiY"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vb1-qQ-JOd" userLabel="First Responder" sceneMemberID="firstResponder"/>
