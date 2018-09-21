@@ -7,17 +7,18 @@
 //
 
 import UIKit
-import CoreData
+import RealmSwift
 
 class PowerListViewController: UITableViewController {
 
-    var itemArray = [Item]()
+    var listItems: Results<Item>?
+    let realm = try! Realm()
+    
     var selectedCategory: Category? {
         didSet {
             loadItems()
         }
     }
-    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,41 +33,42 @@ class PowerListViewController: UITableViewController {
     
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return itemArray.count
+        return listItems?.count ?? 1
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PowerListCell", for: indexPath)
         
-        let item = itemArray[indexPath.row]
-        cell.textLabel?.text = item.title
-        
+        if let item = listItems?[indexPath.row] {
+            cell.textLabel?.text = item.title
+            cell.accessoryType = item.done ? .checkmark: .none
+        } else {
+            cell.textLabel?.text = "No items added"
+        }
         // Ternary operator ==>
         //value = condition ? valueIfTrue : valueIfFalse
         // if true then set it as true, if not then no check mark
         
-        // This is the same as below
-        cell.accessoryType = item.done ? .checkmark : .none
-        
-        //        if item.done == true {
-        //            cell.accessoryType = .checkmark
-        //        } else {
-        //            cell.accessoryType = .none
-        //        }
-
         return cell
     }
     
 //MARK - Tableview Delegate Methods
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        if let item = listItems?[indexPath.row] {
+             do {
+            try realm.write {
+                item.done = !item.done
+                }
+                } catch {
+                  print("Error saving done status, \(error)")
+                }
+        }
 //        context.delete(itemArray[indexPath.row])
 //        itemArray.remove(at: indexPath.row)
-        
-        itemArray[indexPath.row].done = !itemArray[indexPath.row].done
-        saveItems()
-        
+//
+//        listItems![indexPath.row].done = !listItems![indexPath.row].done
+        tableView.reloadData()
         tableView.deselectRow(at: indexPath, animated: true)
         
     }
@@ -81,14 +83,21 @@ class PowerListViewController: UITableViewController {
         let action = UIAlertAction(title: "Add Mission", style: .default) { (action) in
             //what will happen once the user clicks the add item button on our UIAlert
             if textField.text != "" {
-    
-                let newItem = Item(context: self.context)
-                newItem.title = textField.text!
-                newItem.done = false
-                newItem.parentCategory = self.selectedCategory
+                if let currentCategory = self.selectedCategory {
+                do {
+                    try self.realm.write {
+                        let newItem = Item()
+                        newItem.title = textField.text!
+                        newItem.dateCreated = Date()
+                        
+                        currentCategory.items.append(newItem)
+                        }
+                    } catch {
+                        print("Error saving new items, \(error)")
+                        }
+                    }
                 
-                self.itemArray.append(newItem)
-                self.saveItems()
+                self.tableView.reloadData()
                 
             } else {
                 print("User did not enter an item")
@@ -105,34 +114,12 @@ class PowerListViewController: UITableViewController {
     
     //MARK - Model Manipulation Methods
     
-    func saveItems() {
-        
-        do {
-            try context.save()
-        } catch {
-            print("Error saving context \(error)")
-        }
-        self.tableView.reloadData()
-    }
     
-    func loadItems(with request: NSFetchRequest<Item> = Item.fetchRequest(), and predicate: NSPredicate? = nil) {
+    func loadItems() {
         // the " = ItemfetchRequest" is a default value if it is empty and the "with" is an external paramater and "request" is the internal paramater
-    
-        //let request: NSFetchRequest<Item> = Item.fetchRequest()
-        
-        let categoryPredicate = NSPredicate(format: "parentCategory.name MATCHES %@", selectedCategory!.name!)
-        
-        if let additionalPredicate = predicate {
-            request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [categoryPredicate, additionalPredicate])
-        } else {
-            request.predicate = categoryPredicate
-        }
-        
-        do {
-           itemArray = try context.fetch(request)
-        } catch {
-            print("Error fetching data from context \(error)")
-        }
+
+        listItems = selectedCategory?.items.sorted(byKeyPath: "title", ascending: true)
+        tableView.reloadData()
     }
 
 }
@@ -141,14 +128,18 @@ class PowerListViewController: UITableViewController {
 extension PowerListViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         
-        let request: NSFetchRequest<Item> = Item.fetchRequest()
-        
-        let predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchBar.text!)
-        
-        request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
-        
-        loadItems(with: request, and: predicate)
+        listItems = listItems?.filter("title CONTAINS[cd] %@", searchBar.text!).sorted(byKeyPath: "dateCreated", ascending: true)
+        tableView.reloadData()
     }
+//        let request: NSFetchRequest<Item> = Item.fetchRequest()
+//
+//        let predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchBar.text!)
+//
+//        request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
+//
+//        loadItems(with: request, and: predicate)
+        
+        
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchBar.text?.count == 0 {
             loadItems()
